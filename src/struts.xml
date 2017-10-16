@@ -1,0 +1,96 @@
+<!DOCTYPE struts PUBLIC
+        "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+        "http://struts.apache.org/dtds/struts-2.0.dtd">
+<struts>
+  <include file="struts-default.xml"/>
+  <constant name="struts.devMode" value="true" />
+  <constant name="struts.ui.theme" value="simple" />  
+  <!-- 下面是action和对应的页面，经过Structs2拦截器处理后返回给用户的浏览器正确的html页面 -->
+  <package name="welcome" extends="struts-default">
+  	 <!-- 返回欢迎页 -->
+  	<action name="welcome">
+		<result>/welcome.jsp</result>
+	</action>
+	 <!-- 用户在欢迎页点击查找作者后，返回给用户/welcomeSearch.jsp -->
+    <action name="welcomeSearch">
+      <result>/welcomeSearch.jsp</result>
+    </action>
+    <!-- 用户在欢迎页点击添加图书后，返回给用户/welcomeAddBook.jsp -->
+    <action name="welcomeAdd">
+      <result>/welcomeAddBook.jsp</result>
+    </action>
+    <!-- 用户在欢迎页点击更新图书信息后，返回给用户/welcomeUpdateBook.jsp -->
+    <action name="welcomeUpdate">
+      <result>/welcomeUpdateBook.jsp</result>
+    </action>
+    
+    <!-- 查找动作的实际JAVA类，执行execute方法 -->
+    <!-- 方法返回success，跳转到/showBooks.jsp；方法返回fail，跳转到/addAuthor.jsp-->
+    <action name="searchByAuthor" class="wz.lab2.SearchByAuthorAction" method="execute">
+      <result name="success">/showBooks.jsp</result>
+      <result name="fail">/addAuthor.jsp</result>
+    </action>
+    <!-- 展示图书详细信息的实际JAVA类，执行execute方法 -->
+    <!-- 方法返回success，跳转到/showBookDetails.jsp-->
+    <action name="showBookDetails" class="wz.lab2.ShowBookDetailAction" method="execute">
+      <result name="success">/showBookDetails.jsp</result>
+    </action>
+    <!-- 删除图书的实际JAVA类，执行execute方法 -->
+    <!-- 方法返回success，跳转到/books.jsp；-->
+    <action name="remove" class="wz.lab2.RemoveBookAction" method="execute">
+      <result name="success">/showBooks.jsp</result>
+    </action>
+    <!-- 添加图书动作的实际JAVA类，执行execute方法 -->
+    <!-- 方法返回finished，跳转到/welcome.jsp；方法返回unfinished，跳转到/addAuthor.jsp；方法返回
+    	 failed，跳转到/errorPage.jsp，这是专门的错误处理页面-->
+    <action name="addBook" class="wz.lab2.AddBookAction" method="execute">
+      <result name="finished">/welcome.jsp</result>
+      <result name="unfinished">/addAuthor.jsp</result>
+      <result name="failed">/errorPage.jsp</result>
+    </action>
+    <!-- 添加作者的实际JAVA类，执行execute方法 -->
+    <!-- 方法返回success，跳转到/welcome.jsp；-->
+    <action name="addAuthor" class="wz.lab2.AddAuthorAction" method="execute">
+      <result name="success">/welcome.jsp</result>
+    </action>
+    <!-- 更新图书信息动作的实际JAVA类，执行execute方法 -->
+    <!-- 方法返回finished，跳转到/welcome.jsp；方法返回unfinished，跳转到/addAuthor.jsp
+    	 方法返回failed，跳转到/errorPage.jsp，这是专门的错误处理页面-->
+    <action name="updateBook" class="wz.lab2.UpdateBookAction" method="execute">
+      <result name="finished">/welcome.jsp</result>
+      <result name="unfinished">/addAuthor.jsp</result>
+      <result name="failed">/errorPage.jsp</result>
+    </action>
+  </package>
+<!--  
+  <package name="oprateMYsql" extends="struts-default" namespace = "oprate"> 
+  	<action name="searchByAuthor" class="wz.lab2.SearchByAuthorAction" method="execute">
+      <result name="success">oprate/showBooks.jsp</result>
+      <result name="fail">oprate/addAuthor.jsp</result>
+    </action>
+    
+    <action name="showBookDetails" class="wz.lab2.ShowBookDetailAction" method="execute">
+      <result name="success">oprate/showBookDetails.jsp</result>
+    </action>
+      
+    
+    <action name="remove" class="wz.lab2.RemoveBookAction" method="execute">
+      <result name="success">oprate/books.jsp</result>
+    </action>
+    
+    <action name="addBook" class="wz.lab2.AddBookAction" method="execute">
+      <result name="finished">oprate/welcome.jsp</result>
+      <result name="unfinished">oprate/addAuthor.jsp</result>
+    </action>
+    
+    <action name="addAuthor" class="wz.lab2.AddAuthorAction" method="execute">
+      <result name="success">/welcome.jsp</result>
+    </action>
+    
+    <action name="updateBook" class="wz.lab2.UpdateBookAction" method="execute">
+      <result name="finished">/welcome.jsp</result>
+      <result name="unfinished">/addAuthor.jsp</result>
+    </action>
+  </package>
+   -->
+</struts>
